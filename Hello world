@@ -1,0 +1,10 @@
+#include <iostream> 
+using namespace std; //instead of prefix std::
+
+int main() //header
+{ //begin
+    cout << "Hello world!" << endl;
+    
+    system("pause");
+    return 0; //return to 0S
+} //end
