@@ -14,11 +14,11 @@ int main()
     //Кількість секунд в одній годині
     const int SecondsInHour = 3600;
     //Кількість секунд, що минули з початку останньої години
-    int secondsSinceLastHour = N % SecondsInHour;
+    int secondsUntilNextHour = N % SecondsInHour;
     //Кількість секунд до закінчення останньої години
-    int secondsUntilNextHour = SecondsInHour - secondsSinceLastHour;
+    int secondsSinceLastHour = SecondsInHour - secondsUntilNextHour;
     //Кількість повних хвилин
-    int fullMinutes = secondsUntilNextHour / 60;
+    int fullMinutes = secondsSinceLastHour / 60;
     cout << "Кількість повних хвилин, що минули з початку останньої години: " << fullMinutes << endl;
 
     //Boolean27.
@@ -39,18 +39,22 @@ float x, y;
     cout << "Введіть значення x: ";
     cin >> x1; //Введення значення x
     const double pi = 3.141592; // визначення дійсної константи
+
     //Обчислення чисельника
     //Обчислення значення синуса (x + π)
     double sinValue = sin(x1 + M_PI); // sin(x + π)
     //Обчислення значення 2^(1 - x)
     double powerValue = pow(2, 1 - x1); // 2^(1 - x)
+
     //Обчислення знаменника
     //Обчислення тангенса модуля x
     double tanValue = tan(fabs(x1)); // tg |x|
     //Обчислення значення синуса 28 градусів (перетворюємо градуси в радіани)
     double sin28 = sin(28 * M_PI / 180); // sin(28 градусів)
+
     //Обчислення всього виразу
     double y1 = (sinValue * sinValue * powerValue) / (4 * tanValue * sin28) + (1.0 / 3.0) * log2(fabs(x1)); 
+
     //Виведення результату
     cout << "Результат виразу: " << y1 << endl;
     return 0;
