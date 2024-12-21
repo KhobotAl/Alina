@@ -1,0 +1,113 @@
+#include <iostream>
+#include <vector>
+
+using namespace std;
+
+// Функція для введення елементів масиву
+void input_array(vector<float>& mas) {
+    cout << "Введіть елементи масиву:" << endl;
+    for (int i = 0; i < mas.size(); ++i) {
+        cin >> mas[i];
+    }
+}
+
+// Функція для виведення елементів масиву
+void print_array(const vector<float>& mas) {
+    for (float val : mas) {
+        cout << val << " ";
+    }
+    cout << endl;
+}
+
+// Завдання 1: Перетворення масиву (збільшення кожного елемента на A[K])
+void task1() {
+    int n, K;
+    cout << "Кількість елементів масиву: ";
+    cin >> n;
+
+    vector<float> arr(n);
+    input_array(arr);
+
+    cout << "Елементи масиву:" << endl;
+    print_array(arr);
+
+    cout << "K (1 <= K <= " << n << "): ";
+    cin >> K;
+
+    // Перевірка на коректність введеного K
+    if (K < 1 || K > n) {
+        cout << "Невірне значення для K! Воно повинно бути між 1 і " << n << "." << endl;
+        return;
+    }
+
+    // Значення елемента A[K] (за індексацією з 1)
+    float increment_value = arr[K - 1];
+
+    // Збільшуємо кожен елемент масиву на значення A[K]
+    for (float& element : arr) {
+        element += increment_value;
+    }
+
+    cout << "Трансформований масив:" << endl;
+    print_array(arr);
+}
+
+// Завдання 2: Виведення елементів масиву з індексами, кратними K
+void task2() {
+    int n, K;
+    cout << "Кількість елементів масиву: ";
+    cin >> n;
+
+    vector<float> arr(n);
+    input_array(arr);
+
+    cout << "Елементи масиву:" << endl;
+    print_array(arr);
+
+    cout << "K (1 <= K <= " << n << "): ";
+    cin >> K;
+
+    // Перевірка на коректність введеного K
+    if (K < 1 || K > n) {
+        cout << "Невірне значення для K! Воно повинно бути між 1 і " << n << "." << endl;
+        return;
+    }
+
+    cout << "Елементи масиву A(K), A(2K), A(3K), ....: " << endl;
+    for (size_t i = K - 1; i < arr.size(); i += K) {
+        cout << arr[i] << " ";
+    }
+    cout << endl;
+}
+
+// Функція для вибору і виконання одного з завдань
+void menu() {
+    int choice;
+    do {
+        cout << "Оберіть опцію:\n";
+        cout << "1. Завдання 1 (Трансформувати масив, додавши A[K] до кожного елемента)\n";
+        cout << "2. Завдання 2 (Показати елементи з індексами, кратними K)\n";
+        cout << "3. Вихід\n";
+        cout << "Введіть ваш вибір: ";
+        cin >> choice;
+
+        switch (choice) {
+            case 1:
+                task1();
+                break;
+            case 2:
+                task2();
+                break;
+            case 3:
+                cout << "Вихід з програми." << endl;
+                break;
+            default:
+                cout << "Невірний вибір. Спробуйте ще раз." << endl;
+        }
+    } while (choice != 3);
+}
+
+int main() {
+    menu();
+    return 0;
+}
