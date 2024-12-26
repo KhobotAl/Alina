@@ -1,0 +1,181 @@
+#include <iostream>
+#include <cmath>
+#include <limits>
+
+using namespace std;
+
+// Функція для перевірки коректності введеного числа (число більше нуля)
+bool isValidNumber(float value) {
+    return value > 0;
+}
+
+// Функція для перевірки коректності введеного числа x для логарифму
+bool isValidLogArgument(double cos_x) {
+    double log_arg = -1 + cos_x;
+    return fabs(log_arg) > 1;
+}
+
+// Функція для перевірки правильності введеного значення r і b
+bool isValidCircleAndSquare(float r, float b) {
+    return r > 0 && b > 0 && b >= r * sqrt(2);
+}
+
+// Функція для обчислення кількості точок, що потрапляють в одну з фігур
+void task1() {
+    int n;
+    cout << "Введіть кількість точок (n): ";
+    cin >> n;
+    
+    float r, b;
+    cout << "Введіть радіус кола (r): ";
+    cin >> r;
+    cout << "Введіть сторону квадрата (b): ";
+    cin >> b;
+    
+    if (!isValidCircleAndSquare(r, b)) {
+        cout << "Помилка: Має бути числове значення, більше за нуль, не нульове та b >= r * sqrt(2)!" << endl;
+        return;
+    }
+    
+    int count = 0;
+    
+    cout << "Введіть координати точок (x, y):" << endl;
+    for (int i = 0; i < n; ++i) {
+        float x, y;
+        cout << "Точка " << i + 1 << ": ";
+        cin >> x >> y;
+
+        // Перевірка на попадання в чверть кола в 3-й чверті
+        bool in_circle = (x <= 0 && y <= 0 && (x * x + y * y <= r * r));
+        
+        // Перевірка на попадання в частину квадрата (4-та чверть)
+        bool in_square_part = (x > 0 && y < 0 && 
+                               x <= b && y >= -b &&  
+                               x * x + y * y >= r * r &&  
+                               y >= -x);
+        
+        if (in_circle || in_square_part) {
+            count++;
+        }
+    }
+
+    cout << "Кількість точок, що потрапляють в одну з фігур: " << count << endl;
+}
+
+// Функція для обчислення логарифму та суми за умовою
+void task2() {
+    double x;
+    int num_elements; // Змінено ім'я змінної для кількості елементів суми
+    cout << "Введіть значення x (градуси): ";
+    cin >> x;
+    
+    // Переведення градусів у радіани
+    double x_rad = x * M_PI / 180.0;
+
+    cout << "Введіть значення n (кількість елементів): ";
+    cin >> num_elements;
+
+    double cos_x = cos(x_rad);
+    if (!isValidLogArgument(cos_x)) {
+        cout << "Помилка: Умова |-1 + cos(x)| > 1 не виконана." << endl;
+        return;
+    }
+
+    double log_arg = -1 + cos_x;
+    double log_value = log(log_arg);
+
+    double sum = 0;
+    for (int k = 1; k <= num_elements; ++k) {
+        sum += pow(-1, k) / (k * pow(log_arg, k));
+    }
+
+    cout << "Значення виразу: " << log_value - sum << endl;
+
+    cout << "Кожний третій елемент суми:" << endl;
+    for (int k = 1; k <= num_elements; ++k) {
+        if (k % 3 == 0) {
+            double term = pow(-1, k) / (k * pow(log_arg, k));
+            cout << "Елемент " << k << ": " << term << endl;
+        }
+    }
+}
+
+// Функція для обчислення збіжного ряду
+double calculate_converging_series(double x, double epsilon = 1e-5) {
+    double sum = 0.0;
+    double term = x;
+    int n = 1;
+
+    while (fabs(term) > epsilon) {
+        sum += term;
+        n++;
+        term = pow(x, n) / tgamma(n + 1);
+    }
+
+    return sum;
+}
+
+// Функція для обчислення розбіжного ряду
+double calculate_diverging_series(double x, double g = 1e2) {
+    double sum = 0.0;
+    double term = x;
+    int n = 1;
+
+    while (fabs(term) < g) {
+        sum += term;
+        n++;
+        term = pow(x, n) / tgamma(n + 1);
+    }
+
+    return sum;
+}
+
+// Функція для обчислення рядів
+void task3() {
+    double x;
+    cout << "Введіть значення x (градуси): ";
+    cin >> x;
+
+    // Переведення градусів у радіани
+    double x_rad = x * M_PI / 180.0;
+
+    double converging_sum = calculate_converging_series(x_rad);
+    cout << "Сума збіжного ряду: " << converging_sum << endl;
+
+    double diverging_sum = calculate_diverging_series(x_rad);
+    cout << "Сума розбіжного ряду: " << diverging_sum << endl;
+}
+
+// Головне меню
+int main() {
+    int choice;
+    do {
+        cout << "Меню:\n";
+        cout << "1. Завдання 1: Кількість точок в фігурах\n";
+        cout << "2. Завдання 2: Обчислення виразу\n";
+        cout << "3. Завдання 3: Обчислення рядів\n";
+        cout << "4. Вихід\n";
+        cout << "Виберіть номер завдання: ";
+        cin >> choice;
+
+        switch (choice) {
+            case 1:
+                task1();
+                break;
+            case 2:
+                task2();
+                break;
+            case 3:
+                task3();
+                break;
+            case 4:
+                cout << "Вихід з програми." << endl;
+                break;
+            default:
+                cout << "Невірний вибір. Спробуйте ще раз." << endl;
+        }
+
+    } while (choice != 4);
+
+    return 0;
+}
