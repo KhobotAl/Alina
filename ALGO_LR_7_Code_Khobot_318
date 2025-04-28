@@ -1,0 +1,156 @@
+#include <iostream>
+#include <iomanip>
+using namespace std;
+
+// Функція для введення розмірів матриці (M і N)
+void inputSize(int &M, int &N) {
+    cout << "Введіть кількість рядків матриці (2-20): ";
+    cin >> M;
+    while (M < 2 || M > 20) {
+        cout << "Некоректне значення! Введіть ще раз (2-20): ";
+        cin >> M;
+    }
+
+    cout << "Введіть кількість стовпців матриці (2-20): ";
+    cin >> N;
+    while (N < 2 || N > 20) {
+        cout << "Некоректне значення! Введіть ще раз (2-20): ";
+        cin >> N;
+    }
+}
+
+// Функція для введення розміру квадратної матриці (тільки M)
+void inputSquareSize(int &M) {
+    cout << "Введіть порядок квадратної матриці (2-20): ";
+    cin >> M;
+    while (M < 2 || M > 20) {
+        cout << "Некоректне значення! Введіть ще раз (2-20): ";
+        cin >> M;
+    }
+}
+
+// Функція для введення елементів матриці
+void inputMatrix(int matrix[][20], int M, int N) {
+    cout << "Введіть елементи матриці:\n";
+    for (int i = 0; i < M; ++i) {
+        for (int j = 0; j < N; ++j) {
+            cin >> matrix[i][j];
+            while (matrix[i][j] < -1000000 || matrix[i][j] > 1000000) {
+                cout << "Некоректне значення! Введіть ще раз: ";
+                cin >> matrix[i][j];
+            }
+        }
+    }
+}
+
+// Функція для виведення матриці
+void outputMatrix(int matrix[][20], int M, int N) {
+    cout << "Матриця:\n";
+    for (int i = 0; i < M; ++i) {
+        for (int j = 0; j < N; ++j) {
+            cout << setw(8) << matrix[i][j];
+        }
+        cout << endl;
+    }
+}
+
+// Matrix30
+// Для кожного стовпця обчислюється середнє арифметичне і рахується кількість елементів, більших за нього
+void processMatrix30(int matrix[][20], int M, int N, int countAboveAverage[]) {
+    for (int j = 0; j < N; ++j) {
+        double sum = 0;
+        for (int i = 0; i < M; ++i) {
+            sum += matrix[i][j];
+        }
+        double average = sum / M;
+
+        int count = 0;
+        for (int i = 0; i < M; ++i) {
+            if (matrix[i][j] > average) {
+                count++;
+            }
+        }
+        countAboveAverage[j] = count;
+    }
+}
+
+// Функція для виведення результату Matrix30
+void outputResultMatrix30(int countAboveAverage[], int N) {
+    cout << "\nКількість елементів у кожному стовпці, більших за середнє арифметичне:\n";
+    for (int j = 0; j < N; ++j) {
+        cout << "Стовпець " << j + 1 << ": " << countAboveAverage[j] << endl;
+    }
+}
+
+// Matrix81
+// Обнулення елементів, які знаходяться ВИЩЕ головної і НИЖЧЕ побічної діагоналі
+void processMatrix81(int matrix[][20], int M) {
+    for (int i = 0; i < M; ++i) {
+        for (int j = 0; j < M; ++j) {
+            int aboveMain = (i < j);       // вище головної діагоналі
+            int belowSecondary = (i > M - j - 1); // нижче побічної діагоналі
+
+            int condition = aboveMain * belowSecondary; // замість if
+            matrix[i][j] = matrix[i][j] * (1 - condition); // обнулення без if
+        }
+    }
+}
+
+// Основна функція для Matrix30
+void taskMatrix30() {
+    int matrix[20][20];
+    int countAboveAverage[20];
+    int M, N;
+
+    inputSize(M, N); // введення розмірів
+    inputMatrix(matrix, M, N); // введення елементів
+    outputMatrix(matrix, M, N); // початковий вивід
+    processMatrix30(matrix, M, N, countAboveAverage);
+    outputResultMatrix30(countAboveAverage, N);
+}
+
+// Основна функція для Matrix81
+void taskMatrix81() {
+    int matrix[20][20];
+    int M;
+
+    inputSquareSize(M);
+    inputMatrix(matrix, M, M);
+    outputMatrix(matrix, M, M);
+    processMatrix81(matrix, M);
+    cout << "\nМатриця після обнулення елементів:\n";
+    outputMatrix(matrix, M, M);
+}
+
+// Функція для багаторазового вибору завдання
+void mainMenu() {
+    int choice;
+    do {
+        cout << "\nОберіть завдання:\n";
+        cout << "1 - Виконати Завдання1\n";
+        cout << "2 - Виконати Завдання2\n";
+        cout << "0 - Вийти\n";
+        cout << "Ваш вибір: ";
+        cin >> choice;
+
+        switch (choice) {
+            case 1:
+                taskMatrix30();
+                break;
+            case 2:
+                taskMatrix81();
+                break;
+            case 0:
+                cout << "Завершення програми.\n";
+                break;
+            default:
+                cout << "Некоректний вибір! Спробуйте ще раз.\n";
+        }
+    } while (choice != 0);
+}
+
+// Точка входу в програму
+int main() {
+    mainMenu();
+    return 0;
+}
