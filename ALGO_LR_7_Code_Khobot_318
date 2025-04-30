@@ -2,7 +2,6 @@
 #include <iomanip>
 using namespace std;
 
-
 // Функція для введення розмірів матриці (M і N)
 void inputSize(int &M, int &N) {
     cout << "Введіть кількість рядків матриці (2-20): ";
@@ -22,7 +21,6 @@ void inputSize(int &M, int &N) {
     }
 }
 
-
 // Функція для введення розміру квадратної матриці (тільки M)
 void inputSquareSize(int &M) {
     cout << "Введіть порядок квадратної матриці (2-20): ";
@@ -33,7 +31,6 @@ void inputSquareSize(int &M) {
         cin >> M;
     }
 }
-
 
 // Функція для введення елементів матриці
 void inputMatrix(int matrix[][20], int M, int N) {
@@ -50,7 +47,6 @@ void inputMatrix(int matrix[][20], int M, int N) {
     }
 }
 
-
 // Функція для виведення матриці
 void outputMatrix(int matrix[][20], int M, int N) {
     cout << "Матриця:\n";
@@ -62,7 +58,6 @@ void outputMatrix(int matrix[][20], int M, int N) {
         cout << endl;
     }
 }
-
 
 // Функція для обробки Matrix30
 // Обчислює середнє арифметичне кожного стовпця та рахує кількість елементів, більших за це середнє
@@ -88,7 +83,6 @@ void processMatrix30(int matrix[][20], int M, int N, int countAboveAverage[]) {
     }
 }
 
-
 // Функція для виведення результату Matrix30
 // Виводить для кожного стовпця кількість елементів, які більші за середнє арифметичне
 void outputResultMatrix30(int countAboveAverage[], int N) {
@@ -110,7 +104,6 @@ void processMatrix81(int matrix[][20], int M) {
     }
 }
 
-
 // Основна функція для Matrix30
 void taskMatrix30() {
     int matrix[20][20]; // Матриця для зберігання даних
@@ -124,7 +117,6 @@ void taskMatrix30() {
     outputResultMatrix30(countAboveAverage, N); // Виведення результатів
 }
 
-
 // Основна функція для Matrix81
 void taskMatrix81() {
     int matrix[20][20]; // Квадратна матриця
@@ -137,7 +129,6 @@ void taskMatrix81() {
     cout << "\nМатриця після обнулення елементів:\n";
     outputMatrix(matrix, M, M);  // Виведення результату
 }
-
 
 // Функція для багаторазового вибору завдання
 void mainMenu() {
@@ -167,7 +158,6 @@ void mainMenu() {
         }
     } while (choice != 0); // Повторювати, поки не обрано вихід
 }
-
 
 // Точка входу в програму
 int main() {
