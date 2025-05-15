@@ -1,7 +1,7 @@
-Лістинг коду до завдання 1.А
-
 #include <iostream>
 #include <Windows.h>
+
+using namespace std;
 
 size_t my_find(const char* source, const char* target, size_t pos = 0) {
     // Обчислення довжини source
@@ -12,7 +12,7 @@ size_t my_find(const char* source, const char* target, size_t pos = 0) {
     size_t target_len = 0;
     while (target[target_len] != '\0') target_len++;
 
-    if (target_len == 0 || target_len > source_len) return std::string::npos;
+    if (target_len == 0 || target_len > source_len) return string::npos;
 
     for (size_t i = pos; i <= source_len - target_len; ++i) {
         size_t j = 0;
@@ -23,7 +23,7 @@ size_t my_find(const char* source, const char* target, size_t pos = 0) {
             return i; // Знайдено входження
         }
     }
-    return std::string::npos; // Не знайдено
+    return string::npos; // Не знайдено
 }
 
 int main() {
@@ -36,10 +36,10 @@ int main() {
     
     size_t result = my_find(text, word);
 
-    if (result != std::string::npos) {
-        std::cout << " Слово знайдено на позиції:: " << result << std::endl;
+    if (result != string::npos) {
+        cout << " Слово знайдено на позиції:: " << result << endl;
     } else {
-        std::cout << "Не знайдено." << std::endl;
+        cout << "Не знайдено." << endl;
     }
 
     return 0;
@@ -311,25 +311,6 @@ task1.cpp:
 #include <string>
 using namespace std;
 
-size_t my_find(const char* source, const char* target, size_t pos = 0) {
-    size_t source_len = 0;
-    while (source[source_len] != '\0') source_len++;
-
-    size_t target_len = 0;
-    while (target[target_len] != '\0') target_len++;
-
-    if (target_len == 0 || target_len > source_len) return string::npos;
-
-    for (size_t i = pos; i <= source_len - target_len; ++i) {
-        size_t j = 0;
-        while (j < target_len && source[i + j] == target[j]) {
-            ++j;
-        }
-        if (j == target_len) return i;
-    }
-    return string::npos;
-}
-
 void runTask1() {
     SetConsoleCP(1251);
     SetConsoleOutputCP(1251);
@@ -338,11 +319,34 @@ void runTask1() {
     const char* text = "Hello, world!";
     const char* word = "world";
 
-    size_t result = my_find(text, word);
+    size_t source_len = 0;
+    while (text[source_len] != '\0') source_len++;
+
+    size_t target_len = 0;
+    while (word[target_len] != '\0') target_len++;
+
+    size_t result;
+    if (target_len == 0 || target_len > source_len) {
+        result = string::npos;
+    }
+    else {
+        result = string::npos;
+        for (size_t i = 0; i <= source_len - target_len; ++i) {
+            size_t j = 0;
+            while (j < target_len && text[i + j] == word[j]) {
+                ++j;
+            }
+            if (j == target_len) {
+                result = i;
+                break;
+            }
+        }
+    }
 
     if (result != string::npos) {
         cout << "Слово знайдено на позиції: " << result << endl;
-    } else {
+    }
+    else {
         cout << "Не знайдено." << endl;
     }
 }
@@ -359,49 +363,11 @@ task2.cpp:
 #include <Windows.h>
 using namespace std;
 
-string processString(const string& input) {
-    string result;
-    size_t i = 0;
-    while (i < input.length()) {
-        while (i < input.length() && input[i] == ' ') {
-            result += ' ';
-            ++i;
-        }
-
-        size_t start = i;
-        while (i < input.length() && input[i] != ' ') {
-            ++i;
-        }
-
-        if (start < i) {
-            string word = input.substr(start, i - start);
-            if (!word.empty()) {
-                char firstChar = word[0];
-                for (size_t j = 0; j < word.length(); ++j) {
-                    if (j != 0 && word[j] == firstChar)
-                        result += '.';
-                    else
-                        result += word[j];
-                }
-            }
-        }
-    }
-
-    return result;
-}
-
-bool isValidInput(const string& input) {
-    for (char c : input) {
-        if (c == ' ') continue;
-        unsigned char uc = static_cast<unsigned char>(c);
-        if (!((uc >= 192 && uc <= 223) || uc == 168 || uc == 170 || uc == 175 || uc == 178)) {
-            return false;
-        }
-    }
-    return true;
-}
-
 void runTask2() {
+    SetConsoleCP(1251);
+    SetConsoleOutputCP(1251);
+    setlocale(LC_ALL, "");
+
     string input;
     int choice;
 
@@ -422,17 +388,75 @@ void runTask2() {
             getline(cin, input);
             break;
 
-        case 2:
-            if (input.empty()) cout << "Спочатку введіть рядок.\n";
-            else cout << (isValidInput(input) ? "Рядок коректний.\n" : "Некоректні символи у рядку.\n");
-            break;
+        case 2: {
+            if (input.empty()) {
+                cout << "Спочатку введіть рядок.\n";
+                break;
+            }
 
-        case 3:
-            if (input.empty()) cout << "Спочатку введіть рядок.\n";
-            else if (!isValidInput(input)) cout << "Некоректний рядок.\n";
-            else cout << "Результат: " << processString(input) << endl;
+            bool valid = true;
+            for (char c : input) {
+                if (c == ' ') continue;
+                unsigned char uc = static_cast<unsigned char>(c);
+                if (!((uc >= 192 && uc <= 223) || uc == 168 || uc == 170 || uc == 175 || uc == 178)) {
+                    valid = false;
+                    break;
+                }
+            }
+            cout << (valid ? "Рядок коректний.\n" : "Некоректні символи у рядку.\n");
             break;
+        }
 
+        case 3: {
+            if (input.empty()) {
+                cout << "Спочатку введіть рядок.\n";
+                break;
+            }
+
+            bool valid = true;
+            for (char c : input) {
+                if (c == ' ') continue;
+                unsigned char uc = static_cast<unsigned char>(c);
+                if (!((uc >= 192 && uc <= 223) || uc == 168 || uc == 170 || uc == 175 || uc == 178)) {
+                    valid = false;
+                    break;
+                }
+            }
+
+            if (!valid) {
+                cout << "Некоректний рядок.\n";
+                break;
+            }
+
+            string result;
+            size_t i = 0;
+            while (i < input.length()) {
+                while (i < input.length() && input[i] == ' ') {
+                    result += ' ';
+                    ++i;
+                }
+
+                size_t start = i;
+                while (i < input.length() && input[i] != ' ') {
+                    ++i;
+                }
+
+                if (start < i) {
+                    string word = input.substr(start, i - start);
+                    if (!word.empty()) {
+                        char firstChar = word[0];
+                        for (size_t j = 0; j < word.length(); ++j) {
+                            if (j != 0 && word[j] == firstChar)
+                                result += '.';
+                            else
+                                result += word[j];
+                        }
+                    }
+                }
+            }
+            cout << "Результат: " << result << endl;
+            break;
+        }
         case 4: {
             string inName, outName;
             cout << "Ім'я вхідного файлу: "; getline(cin, inName);
@@ -445,23 +469,54 @@ void runTask2() {
                 cout << "Помилка відкриття файлів.\n";
                 break;
             }
-
             string line;
             while (getline(inFile, line)) {
-                if (isValidInput(line))
-                    outFile << processString(line) << endl;
-                else
+                bool valid = true;
+                for (char c : line) {
+                    if (c == ' ') continue;
+                    unsigned char uc = static_cast<unsigned char>(c);
+                    if (!((uc >= 192 && uc <= 223) || uc == 168 || uc == 170 || uc == 175 || uc == 178)) {
+                        valid = false;
+                        break;
+                    }
+                }
+                if (!valid) {
                     outFile << "[Некоректний рядок]" << endl;
+                }
+                else {
+                    string result;
+                    size_t i = 0;
+                    while (i < line.length()) {
+                        while (i < line.length() && line[i] == ' ') {
+                            result += ' ';
+                            ++i;
+                        }
+                        size_t start = i;
+                        while (i < line.length() && line[i] != ' ') {
+                            ++i;
+                        }
+                        if (start < i) {
+                            string word = line.substr(start, i - start);
+                            if (!word.empty()) {
+                                char firstChar = word[0];
+                                for (size_t j = 0; j < word.length(); ++j) {
+                                    if (j != 0 && word[j] == firstChar)
+                                        result += '.';
+                                    else
+                                        result += word[j];
+                                }
+                            }
+                        }
+                    }
+                    outFile << result << endl;
+                }
             }
-
             cout << "Файл оброблено.\n";
             break;
         }
-
         case 0:
             cout << "Повернення до головного меню.\n";
             break;
-
         default:
             cout << "Невірний вибір.\n";
         }
