@@ -1,16 +1,17 @@
-#include <iostream>
-#include <Windows.h>
-#include "task1.h"
-#include "task2.h"
+#include <iostream> // Підключення бібліотеки для вводу/виводу
+#include <Windows.h> // Для роботи з Windows API (наприклад, встановлення кодування)
+#include "task1.h" // Підключення заголовочного файлу для завдання 1
+#include "task2.h" // Підключення заголовочного файлу для завдання 2
 using namespace std;
 
 int main() {
-    SetConsoleCP(1251);
-    SetConsoleOutputCP(1251);
-    setlocale(LC_ALL, "");
+    SetConsoleCP(1251); // Встановлює кодування введення
+    SetConsoleOutputCP(1251); // Встановлює кодування виводу
+    setlocale(LC_ALL, "");  // Локалізація відповідно до системної мови
 
-    int choice;
+    int choice; // Змінна для вибору користувача в меню
     do {
+        // Вивід головного меню
        cout << "\n=== ГОЛОВНЕ МЕНЮ ===\n";
        cout << "1. Завдання 1\n";
        cout << "2. Завдання 2\n";
@@ -18,20 +19,21 @@ int main() {
        cout << "Ваш вибір: ";
        cin >> choice;
 
+         // Обробка вибору користувача
         switch (choice) {
         case 1:
-            runTask1();
+            runTask1(); // Виклик функції для виконання завдання 1
             break;
         case 2:
-            runTask2();
+            runTask2(); // Виклик функції для виконання завдання 2
             break;
         case 0:
-            cout << "Завершення програми.\n";
+            cout << "Завершення програми.\n"; // Повідомлення про завершення
             break;
         default:
-           cout << "Невірний вибір.\n";
+           cout << "Невірний вибір.\n"; // Обробка неправильного вибору
         }
-    } while (choice != 0);
+    } while (choice != 0); // Повторювати, поки користувач не вибере "0"
 
-    return 0;
+    return 0; // Завершення програми
 }
