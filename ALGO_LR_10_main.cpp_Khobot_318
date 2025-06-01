@@ -1,42 +1,45 @@
-#include <iostream>
-#include <Windows.h>
-#include "task1.h"
-#include "task2.h"
-#include "task3.h"
+#include <iostream> // Підключення бібліотеки для вводу/виводу
+#include <Windows.h> // Підключення бібліотеки для роботи з Windows API 
+#include "task1.h" // Заголовочний файл для завдання 1
+#include "task2.h" // Заголовочний файл для завдання 2
+#include "task3.h" // Заголовочний файл для завдання 3
 using namespace std;
 
 int main() {
+ // Встановлення підтримки кирилиці
     SetConsoleCP(1251);
     SetConsoleOutputCP(1251);
     setlocale(LC_ALL, "");
 
-    int choice;
+    int choice; // Змінна для збереження вибору користувача
     do {
+        // Виведення головного меню
        cout << "\n=== ГОЛОВНЕ МЕНЮ ===\n";
        cout << "1. Завдання 1\n";
        cout << "2. Завдання 2\n";
        cout << "3. Завдання 3\n";
        cout << "0. Вихід\n";
        cout << "Ваш вибір: ";
-       cin >> choice;
+       cin >> choice; // Зчитування вибору користувача
 
+        // Обробка вибору за допомогою конструкції switch
         switch (choice) {
         case 1:
-            runTask1();
+            runTask1(); // Виклик функції для завдання 1
             break;
         case 2:
-            runTask2();
+            runTask2(); // Виклик функції для завдання 2
             break;
         case 3:
-            runTask3();
+            runTask3(); // Виклик функції для завдання 3
             break;
         case 0:
-            cout << "Завершення програми.\n";
+            cout << "Завершення програми.\n"; // Повідомлення про завершення
             break;
         default:
-           cout << "Невірний вибір.\n";
+           cout << "Невірний вибір.\n"; // Повідомлення при неправильному вводі
         }
-    } while (choice != 0);
+    } while (choice != 0); // Повторення, поки не вибрано "0"
 
-    return 0;
+    return 0; // Завершення програми
 }
