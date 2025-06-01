@@ -1,0 +1,54 @@
+#include <iostream>
+using namespace std;
+
+// A. Опис структури з вхідними та вихідними даними
+struct PowerData {
+    double A;       // Вхідне число
+    double A2, A3;  // A^2, A^3
+    double A5;      // A^5
+    double A10;     // A^10
+    double A15;     // A^15
+};
+
+// C. Функція для перевірки і введення вхідних даних
+void inputData(PowerData& data) {
+    cout << "Введіть число A: ";
+    cin >> data.A;
+}
+
+// B. Функція обробки (обчислення всіх степенів з використанням 5 множень)
+void computePowers(PowerData& data) {
+    double x = data.A;
+
+    // 1) A2 = A * A
+    data.A2 = x * x;
+
+    // 2) A3 = A2 * A
+    data.A3 = data.A2 * x;
+
+    // 3) A5 = A2 * A3
+    data.A5 = data.A2 * data.A3;
+
+    // 4) A10 = A5 * A5
+    data.A10 = data.A5 * data.A5;
+
+    // 5) A15 = A10 * A5
+    data.A15 = data.A10 * data.A5;
+}
+
+// E. Виведення результатів
+void printResults(const PowerData& data) {
+    cout << "A^2  = " << data.A2 << endl;
+    cout << "A^3  = " << data.A3 << endl;
+    cout << "A^5  = " << data.A5 << endl;
+    cout << "A^10 = " << data.A10 << endl;
+    cout << "A^15 = " << data.A15 << endl;
+}
+
+// Основна функція для запуску завдання
+void runTask2() {
+    PowerData data;       // D. Оголошення змінної структури
+    inputData(data);      // C. Виклик функції вводу
+    computePowers(data);  // B. Виклик функції обчислення
+    printResults(data);   // E. Вивід результатів
+}
