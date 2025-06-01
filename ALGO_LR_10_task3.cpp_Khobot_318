@@ -1,4 +1,4 @@
-#include <iostream>
+#include <iostream> // Підключення бібліотеки для введення/виведення
 using namespace std;
 
 // A. Структура з вхідними та вихідними даними
@@ -11,9 +11,9 @@ struct PointData {
 void inputData(PointData& data) {
     cout << "Введіть координати x та y\n";
     cout << "x: ";
-    cin >> data.x;
+    cin >> data.x; // Зчитування x
     cout << "y: ";
-    cin >> data.y;
+    cin >> data.y; // Зчитування y
 }
 
 // B. Функція обробки (перевірка чвертей)
@@ -34,7 +34,7 @@ void printResult(const PointData& data) {
 // D. Основна функція
 void runTask3() {
     PointData point;
-    inputData(point);        // C
-    checkQuadrant(point);    // B
-    printResult(point);      // E
+    inputData(point);        // C. Введення координат
+    checkQuadrant(point);    // B. Перевірка належності до чверті
+    printResult(point);      // E. Виведення результату
 }
