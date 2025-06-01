@@ -1,0 +1,40 @@
+#include <iostream>
+using namespace std;
+
+// A. Структура з вхідними та вихідними даними
+struct PointData {
+    double x, y;       // Вхідні координати
+    bool isIn23Quad;   // Вихідне значення: чи точка у 2 або 3 чверті
+};
+
+// C. Функція введення і перевірки вхідних даних
+void inputData(PointData& data) {
+    cout << "Введіть координати x та y\n";
+    cout << "x: ";
+    cin >> data.x;
+    cout << "y: ";
+    cin >> data.y;
+}
+
+// B. Функція обробки (перевірка чвертей)
+void checkQuadrant(PointData& data) {
+    // Друга чверть: x < 0, y > 0
+    // Третя чверть: x < 0, y < 0
+    data.isIn23Quad = (data.x < 0 && data.y != 0);
+}
+
+// E. Виведення результату
+void printResult(const PointData& data) {
+    if (data.isIn23Quad)
+        cout << "Точка лежить у другій або третій координатній чверті." << endl;
+    else
+        cout << "Точка НЕ лежить у другій або третій координатній чверті." << endl;
+}
+
+// D. Основна функція
+void runTask3() {
+    PointData point;
+    inputData(point);        // C
+    checkQuadrant(point);    // B
+    printResult(point);      // E
+}
