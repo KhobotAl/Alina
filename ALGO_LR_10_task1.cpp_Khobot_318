@@ -1,5 +1,5 @@
-#include <iostream>
-#include <cmath>
+#include <iostream> // Бібліотека для роботи з введенням/виведенням
+#include <cmath> // Бібліотека для математичних функцій
 using namespace std;
 
 // Param64
@@ -56,7 +56,7 @@ void runTask1() {
         {4, 3},
         {0, 3}
     };
-    int n1 = 4;
+    int n1 = 4; 
 
     // Багатокутник 2: п’ятикутник (5 вершин)
     TPoint polygon2[] = {
