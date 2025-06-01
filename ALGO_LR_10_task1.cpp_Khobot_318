@@ -2,21 +2,6 @@
 #include <cmath> // Бібліотека для математичних функцій
 using namespace std;
 
-// Param64
-// Тип TPoint — запис із двома полями дійсного типу X і Y (координати точки на площині)
-struct TPoint {
-    double X; // координата по осі X
-    double Y; // координата по осі Y
-};
-
-// Param65
-// Тип TTriangle — запис із трьома полями A, B, C типу TPoint (вершини трикутника)
-struct TTriangle {
-    TPoint A; // перша вершина трикутника
-    TPoint B; // друга вершина трикутника
-    TPoint C; // третя вершина трикутника
-};
-
 // Param70: Реалізація функції AreaN
 double AreaN(TPoint P[], int N) {
     double area = 0.0; // Загальна площа багатокутника
